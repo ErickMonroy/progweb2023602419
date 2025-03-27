@@ -19,7 +19,7 @@
         let mediana = 0;
         let numUno = 0;
         let numDos = 0;
-        
+
 
         //Conteo 
         for (let i = 2; i <= 400;) {
@@ -34,9 +34,9 @@
         document.write("<br><br>Promedio= " + (prom) / j);
 
         //Moda
-        let moda = [];  
-        let maxFrecuencia = 0;  
-        let frecuencia = 0;  
+        let moda = [];
+        let maxFrecuencia = 0;
+        let frecuencia = 0;
 
         // Recorremos cada número de la serie 
         for (let k = 0; k < serie.length; k++) {
@@ -44,29 +44,29 @@
             let frecuencia = 0;
 
             // Buscamos similitud del numero
-            for (let l=k; l < serie.length; l++) {
+            for (let l = k; l < serie.length; l++) {
                 if (serie[l] === num) {
                     frecuencia++;
-                }   
+                }
             }
 
             // Si encontramos un número con mayor frecuencia, actualizamos la moda
             if (frecuencia > maxFrecuencia) {
-                maxFrecuencia = frecuencia; 
-                moda = [num];  
+                maxFrecuencia = frecuencia;
+                moda = [num];
             } else if (frecuencia === maxFrecuencia) {
-                moda.push(num);  
+                moda.push(num);
             }
         }
-        
-        
+
+
         // Si tiene el mismo tamaño son todos los numeros, por que no hay moda
         if (moda.length === serie.length) {
             document.write("<br><br>Moda: No hay moda en la serie numérica");
         } else {
             document.write("<br><br>Moda= " + moda.join(", "));
         }
-        
+
 
         //Mediana
         if (j % 2 === 0) {
@@ -115,5 +115,4 @@
 
     </script>
 </body>
-
-
+</html>
