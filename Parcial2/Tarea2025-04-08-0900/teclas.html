@@ -1,0 +1,135 @@
+<html>
+    <head>
+        <style>
+            body{
+                background-color: rgb(196, 255, 252);
+            }
+   
+            /*mantener todas las teclas en un mismo sitio para que no esten desparpajadas*/
+            .tecladoGeneral {
+                display: flex;
+            }
+            
+            /*posicinamiento de las teclas*/
+            .grupoTeclas {
+                display: grid;
+                gap: 10px;
+                padding: 20px;
+            }
+            
+            /*color del texto que contiene las teclas*/
+            input::placeholder {
+                color: white; 
+            }
+            
+            /*Estilo de las teclas*/
+            input {
+                width: 80px; 
+                height: 80px; 
+                background-color: #333;
+                text-align: center;
+                border:none;
+                font-size: 24px;
+                font-weight: bold;
+                border-radius: 10px;
+                transition: 0.5s ease;
+                color: white;
+               
+            }
+           
+            /*orden de posicionamiento de las teclas*/
+            #txtZ { grid-row: 10; grid-column: 1; }
+            #txtX { grid-row: 10; grid-column: 2; }
+            #txtW { grid-row: 1; grid-column: 2; }
+            #txtA { grid-row: 2; grid-column: 1; }
+            #txtS { grid-row: 2; grid-column: 2; }
+            #txtD { grid-row: 2; grid-column: 3; }
+            
+            /*Coor al presionar*/
+            .iluminado {
+                background-color: #007bff;
+                box-shadow: 15px #00a8ff;
+                transition: 0.10s ease;
+            }
+            
+            p{
+                font-size: 20px ;
+            }
+        </style>
+        <script>
+            /*VARIABLES PARA DETERMINAR QUE HACER CON CADA TECLAS AL OBTENER ACCIÓN*/
+            let txtW, txtA, txtS, txtD, txtZ, txtX;
+
+            /*Obtener valors de cada teclas(respuesta)*/
+            function agregaListeners(){
+                txtW = document.getElementById('txtW');
+                txtA = document.getElementById('txtA');
+                txtS = document.getElementById('txtS');
+                txtD = document.getElementById('txtD');
+                txtZ = document.getElementById('txtZ');
+                txtX = document.getElementById('txtX');
+                
+                /*Listener de los eventos*/
+                document.addEventListener("keydown", teclaPresionada);
+                document.addEventListener("keyup", teclaSoltada);
+            }
+            
+            /*Función al presionar una tecla*/
+            function teclaPresionada(event) {
+                let tecla = event.key.toLowerCase();
+                let relacion = {
+                    'w': txtW, 
+                    'a': txtA, 
+                    's': txtS, 
+                    'd': txtD,
+                    'z': txtZ,
+                    'x': txtX
+                };
+                
+                //si la tecla se presiona hacer *iluminado
+                if(relacion[tecla]) {
+                    relacion[tecla].classList.add('iluminado');
+                }
+            }
+
+            /*Función al dejar de presionar una tecla*/
+            function teclaSoltada(event) {
+                let tecla = event.key.toLowerCase();
+                let relacion = {
+                    'w': txtW, 
+                    'a': txtA, 
+                    's': txtS, 
+                    'd': txtD,
+                    'z': txtZ,
+                    'x': txtX
+                };
+                
+                //si la tecla se presiona hacer *iluminado
+                if(relacion[tecla]) {
+                    relacion[tecla].classList.remove('iluminado');
+                }
+            }
+        </script>
+    </head>
+    <!--Verficar en todo momento la resuesta del teclado-->
+    <body onload="agregaListeners()">
+        <center><h1>Interfaz de teclas</h1>
+            <p>Nombre: Monroy Santana Erick Daniel</p>
+            <p>No. Boleta: 2023602419</p></center>
+        
+        <div class="tecladoGeneral">
+            <!--Inputs de las teclas definidas con las clases correspondientes para su posicionamiento correcto-->
+            <div class="grupoTeclas teclas-zx">
+                <input id="txtZ" placeholder="Z" readonly>
+                <input id="txtX" placeholder="X" readonly>
+            </div>
+            
+            <div class="grupoTeclas teclas-wasd">
+                <input id="txtW" placeholder="W" readonly>
+                <input id="txtA" placeholder="A" readonly>
+                <input id="txtS" placeholder="S" readonly>
+                <input id="txtD" placeholder="D" readonly>
+            </div>
+        </div>
+    </body>
+</html>

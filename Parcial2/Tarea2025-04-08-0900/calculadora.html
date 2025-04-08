@@ -1,0 +1,199 @@
+<html>
+<head>
+  <title>Calculadora</title>
+  <style>
+    body {
+      font-family: Arial;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 88vh; 
+      background: #ffffff;
+      flex-direction: column; 
+    }
+    .titulo {
+      margin-bottom: 20px; 
+      font-size: 24px;
+      color: #333;
+    }
+
+    .calculadora { 
+      background: #9abfd0;
+      padding: 10px;
+      border-radius: 20px;
+    }
+
+    .pantalla {
+      width: 100%;
+      font-size: 24px;
+      padding: 10px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      border: none;
+      text-align: right;
+      background: #ffffff;
+      color: rgb(0, 0, 0);
+    }
+
+    .teclas {
+      display: grid;
+      margin: 22px;
+      grid-template-columns: repeat(4, 60px);
+      gap: 10px;
+    }
+
+    button {
+      padding: 15px;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ffffff;
+      color: #000000;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background-color: #5fbbed;
+    }
+
+    button.active {
+      background-color: #9a9a9a;
+      color: #fff;
+    }
+
+    .colorC {
+      background-color: rgb(47, 212, 230);
+    }
+
+    .coloresOpe {
+      background-color: #0d6efd;
+    }
+
+    .coloresIgual {
+      background-color: red;
+    }
+  </style>
+
+  <script>
+    //funciones listeners para verficicar en la página
+    function agregaListeners() {
+      let pantalla = document.getElementById("pantalla");
+      let botones = document.querySelectorAll("button[id]");
+      let limpiarBtn = document.getElementById("limpiar");
+      let igualBtn = document.getElementById("igual");
+
+      //variable para guardar la operación actual
+      let expresion = "";
+
+      //verificacion de display de la calculadora actualizar
+      function actualizarPantalla() {
+        pantalla.value = expresion;
+      }
+
+      //verifica si un botón esta siendo presionado
+      function presionarBoton(valor) {
+        expresion += valor;
+        actualizarPantalla();
+      }
+
+      // Evalúa la expresión y muestra el resultado en caso de error
+      function calcular() {
+ 
+          let resultado = eval(expresion);
+          pantalla.value = resultado;
+          expresion = "";
+      }
+
+      //limpiar pantalla
+      function limpiar() {
+        expresion = "";
+        actualizarPantalla();
+      }
+
+      //eventos de cada uno de los botones asignados
+      botones.forEach(function(boton) {
+        boton.addEventListener("click", function() {
+          let valor = boton.innerText;
+          if (valor == "=") {
+            calcular();
+          } else if (valor == "C") {
+            limpiar();
+          } else {
+            presionarBoton(valor);
+          }
+
+          //se visualiza que los botones son presionados
+          boton.classList.add("active");
+          setTimeout(function() {
+            boton.classList.remove("active");
+          });
+        });
+      });
+
+      //se verifica que botones son prsionados por el teclado 
+      document.addEventListener("keydown", function(e) {
+        let key = e.key;
+
+        //operadores permitidos
+        if (/[\d\+\-]/.test(key)) {
+          presionarBoton(key);
+          //encuentra el boton que corresponde para realizar la animation
+          let boton = Array.from(botones).find(function(b) {
+            return b.innerText == key;
+          });
+          if (boton) {
+            boton.classList.add("active");
+            setTimeout(function() {
+              boton.classList.remove("active");
+            },);
+          }
+          //al presionar enter se calcula
+        } else if (key == "Enter") {
+          calcular();
+          igualBtn.classList.add("active");
+          setTimeout(function() {
+            igualBtn.classList.remove("active");
+          });
+          //AL PRESIONAR C SE  BORRA
+        } else if (key == "c" || key == "C"|| key == "Backspace") {
+          limpiar();
+          limpiarBtn.classList.add("active");
+          setTimeout(function() {
+            limpiarBtn.classList.remove("active");
+          });
+        }
+      });
+    }
+  </script>
+</head>
+<body onload="agregaListeners()">
+  <div class="titulo"><center><h2>Calculadora</h2>
+    <p>Nombre: Monroy Santana Erick Daniel</p>
+    <p>No. Boleta: 2023602419</p></center>
+    
+  </div>
+  <div class="calculadora">
+    <input type="text" id="pantalla" class="pantalla"  />
+    <div class="teclas">
+      <button id="7">7</button>
+      <button id="8">8</button>
+      <button id="9">9</button>
+      <button id="limpiar" class="colorC">C</button>
+
+      <button id="4">4</button>
+      <button id="5">5</button>
+      <button id="6">6</button>
+      <button id="-" class="coloresOpe">-</button>
+
+      <button id="1">1</button>
+      <button id="2">2</button>
+      <button id="3">3</button>
+      <button id="+" class="coloresOpe">+</button>
+
+      <button id="0">0</button>
+      <button style="grid-column: span 3" id="igual" class="coloresIgual">=</button>
+    </div>
+  </div>
+</body>
+</html>
